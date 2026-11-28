@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Roblox Username Checker</title>
+  <style>
+    body { font: 16px system-ui, sans-serif; max-width: 700px; margin: 3rem auto; padding: 0 1rem; }
+    textarea { box-sizing: border-box; width: 100%; min-height: 12rem; padding: .75rem; }
+    button { margin-top: .75rem; padding: .6rem 1rem; cursor: pointer; }
+    .error { color: #a40000; }
+    .available { color: #176b2c; }
+    .taken { color: #a40000; }
+  </style>
+</head>
+<body>
+  <h1>Roblox Username Checker</h1>
+  <p>Check up to {{ max_usernames }} usernames at a time. No account signup, passwords, cookies, or webhooks are used.</p>
+  <form method="post">
+    <label for="usernames">Enter one username per line</label>
+    <textarea id="usernames" name="usernames" required>{{ raw_usernames }}</textarea>
+    <button type="submit">Check usernames</button>
+  </form>
+
+  {% if error %}
+    <p class="error" role="alert">{{ error }}</p>
+  {% endif %}
+
+  {% if results %}
+    <h2>Results</h2>
+    <ul>
+      {% for result in results %}
+        <li class="{{ 'available' if result.available else 'taken' }}">
+          {{ result.username }} — {{ 'Available' if result.available else 'Taken' }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</body>
+</html>
